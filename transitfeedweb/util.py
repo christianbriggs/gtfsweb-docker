@@ -1,4 +1,5 @@
 # source: http://stackoverflow.com/a/19352848/890242
+from __future__ import print_function
 import os
 
 
@@ -11,8 +12,9 @@ def download(url, out=None):
     care less.)
     """
     from sh import wget  # @UnresolvedImport
-    print wget(url, '-O', out)
+    print(wget(url, '-O', out))
     return out
+
 
 def which(file):
     """
@@ -20,6 +22,6 @@ def which(file):
     """
     for path in os.environ["PATH"].split(":"):
         if os.path.exists(path + "/" + file):
-                return path + "/" + file
+            return path + "/" + file
 
-    return None 
+    return None

@@ -6,7 +6,7 @@ from flask.globals import request
 from flask.helpers import url_for, send_from_directory
 from flask.templating import render_template
 from flask_basicauth import BasicAuth
-from werkzeug.utils import secure_filename, redirect
+import werkzeug.utils
 
 from transitfeedweb.validator import GTFSValidator
 
@@ -21,7 +21,7 @@ app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024
 basic_auth = BasicAuth(app)
 
 @app.route('/')
-@basic_auth.required
+# @basic_auth.required
 def index():
     feedurl = request.args.get('feedurl')
     results = None
@@ -43,10 +43,10 @@ def upload():
     if request.method == 'POST':
         file = request.files['file']
         if file and '.zip' in file.filename:
-            filename = secure_filename(file.filename)
+            filename = werkzeug.utils.secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return redirect('/?feedurl=upload:/%s' % filename)
-    return redirect('/')
+            return werkzeug.utils.redirect('/?feedurl=upload:/%s' % filename)
+    return werkzeug.utils.redirect('/')
     
 
 if __name__ == '__main__':

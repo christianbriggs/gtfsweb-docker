@@ -1,8 +1,8 @@
-'''
+"""
 Created on Dec 22, 2014
 
 @author: patrick
-'''
+"""
 import os
 import unittest
 
